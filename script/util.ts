@@ -246,7 +246,7 @@ async function runRelease(
   await standardVersion({
     ...config,
     silent: false,
-    noVerify: false,
+    noVerify: true,
     prerelease: params.prerelease,
     firstRelease: params.firstRelease,
     releaseCommitMessageFormat: `release(${config.name}): {{currentTag}}`,
