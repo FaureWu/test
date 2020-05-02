@@ -7,6 +7,39 @@ const commonjs = require('rollup-plugin-commonjs');
 const typescript = require('rollup-plugin-typescript2');
 const shell = require('shelljs');
 const standardVersion = require('standard-version');
+const compareVersion = require('compareVersion');
+
+interface PackageConfig {
+  main: string;
+  module: string;
+  name: string;
+  version: string;
+  [props: string]: any;
+}
+
+interface Package {
+  name?: string;
+  sourcePath: string;
+  rootPath: string;
+  tsConfigPath: string;
+  packageJson: PackageConfig;
+}
+
+interface Params {
+  main: boolean | string;
+  package: boolean | string;
+  [props: string]: any;
+}
+
+interface Commit {
+  commit: string;
+  message: string;
+}
+
+interface Tag {
+  package: string;
+  version: string;
+}
 
 const rootPath = process.cwd();
 const packageRootPath = path.resolve(rootPath, 'package');
@@ -35,35 +68,50 @@ function toCamel(name: string): string {
   });
 }
 
-interface PackageConfig {
-  main: string;
-  module: string;
-  name: string;
-  version: string;
-  [props: string]: any;
+function getTag(tag: string): Tag | null {
+  const match = tag.match(/tag: (.+)@(\d+.\d+.\d+)/) as
+    | [string, string, string]
+    | null;
+
+  if (!match) return match;
+
+  return { package: match[1], version: match[2] };
 }
 
-interface Package {
-  name?: string;
-  sourcePath: string;
-  rootPath: string;
-  tsConfigPath: string;
-  packageJson: PackageConfig;
-}
+function getNewCommits(
+  messages: string[],
+  commits: string[],
+  tags: string[],
+  version: string,
+): Commit[] {
+  const result = [] as Commit[];
 
-interface Params {
-  main: boolean | string;
-  package: boolean | string;
-  [props: string]: any;
-}
+  messages.every((message: string, index: number): boolean => {
+    const match = message.match(
+      /^(revert: )?(feat|fix|docs|style|refactor|perf|test|build|chore|release)(\(.+\))?: .{1,50}/,
+    );
+    if (!match) {
+      // 不符合commit规范，直接舍弃
+      return true;
+    }
 
-interface Commit {
-  commit: string;
-  message: string;
-  version: string;
-}
+    if (!match[1] && match[2] === 'release') {
+      // 发布节点提交
+      const tag = getTag(tags[index]);
+      if (tag && compareVersion(tag.version, version) === -1) {
+        return false;
+      }
+    }
 
-const commitRE = /^(revert: )?(feat|fix|doc|style|refactor|perf|test|build|ci|chore|types|release|dep)(\(.+\))?: .{1,50}/;
+    result.push({
+      message,
+      commit: commits[index],
+    });
+    return true;
+  });
+
+  return result;
+}
 
 function changelog({
   version,
@@ -82,46 +130,8 @@ function changelog({
     .exec('git log --pretty=format:%d', { silent: true })
     .stdout.split('\n');
 
-  const newCommits = [] as Commit[];
-  // commits.every((commit: string, index: number): boolean => {
-  //   const [message, revert, type, name] = commit.match(commitRE) as [
-  //     string,
-  //     string,
-  //     string,
-  //     string,
-  //   ];
-  // });
-
-  tags.every((tag: string, index: number): boolean => {
-    if (!tag) {
-      newCommits.push({
-        commit: commits[index],
-        message: messages[index],
-        version,
-        // ...resolveMessage(messages[index]),
-      });
-      return true;
-    }
-
-    const [, n, v] = tag.match(/tag: (.+)@(\d+.\d+.\d+)/) as [
-      string,
-      string,
-      string,
-    ];
-    if (n === package && v === version) {
-      newCommits.push({
-        commit: commits[index],
-        message: messages[index],
-        version: v,
-        // ...resolveMessage(messages[index]),
-      });
-      return true;
-    }
-
-    return false;
-  });
-
-  console.log(newCommits);
+  const newCommits = getNewCommits(messages, commits, tags, version);
+  console.log(version, newCommits);
 }
 
 async function buildPackage(packages: Package[]): Promise<void> {
@@ -181,6 +191,7 @@ function getPackage(name: string): Package {
 
 function getMain(): Package {
   return {
+    name: 'core',
     sourcePath: path.resolve(rootPath, 'src'),
     rootPath,
     packageJson: require(path.resolve(rootPath, 'package.json')),
@@ -231,10 +242,11 @@ function resolve(
 async function runRelease(config: object, params: Params): Promise<void> {
   await standardVersion({
     ...config,
-    silent: true,
+    silent: false,
     noVerify: false,
     prerelease: params.prerelease,
     firstRelease: params.firstRelease,
+    releaseCommitMessageFormat: `release(${config.name}): {{currentTag}}`,
     skip: {
       changelog: true,
     },
@@ -257,11 +269,15 @@ async function releasePackage({
     await runRelease(
       {
         tagPrefix: `${pkg.packageJson.name}@`,
+        name: pkg.name,
         // infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
       },
       params,
     );
-    changelog({ package: 'test', version: '1.11.7' });
+    changelog({
+      package: pkg.name,
+      version: require(path.release(pkg.rootPath, 'package.json').version),
+    });
   }
 
   await releasePackage({ packages, params });
@@ -282,6 +298,7 @@ async function release({
     await runRelease(
       {
         tagPrefix: `${packageJson.name}@`,
+        name: main.name,
         // infile: path.resolve(main.rootPath, 'CHANGELOG.md'),
       },
       params,
@@ -298,5 +315,4 @@ module.exports = {
   build,
   resolve,
   release,
-  commitRE,
 };

@@ -1,10 +1,11 @@
 const chalk = require('chalk');
-const util = require('./util');
 
 const msgPath = process.env.HUSKY_GIT_PARAMS;
 const msg = require('fs').readFileSync(msgPath, 'utf-8').trim();
 
-if (!util.commitRE.test(msg)) {
+const commitRE = /^(revert: )?(feat|fix|docs|style|refactor|perf|test|build|chore)(\(.+\))?: .{1,50}/;
+
+if (!commitRE.test(msg)) {
   console.log();
   console.error(
     `  ${chalk.bgRed.white(' ERROR ')} ${chalk.red(
