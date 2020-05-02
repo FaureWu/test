@@ -7,6 +7,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const typescript = require('rollup-plugin-typescript2');
 const shell = require('shelljs');
 const standardVersion = require('standard-version');
+const changelog = require('./changelog');
 
 const rootPath = process.cwd();
 const packageRootPath = path.resolve(rootPath, 'package');
@@ -117,7 +118,7 @@ function getMain(): Package {
     sourcePath: path.resolve(rootPath, 'src'),
     rootPath,
     packageJson: require(path.resolve(rootPath, 'package.json')),
-    tsConfig: path.resolve(rootPath, 'tsconfig.json'),
+    tsConfigPath: path.resolve(rootPath, 'tsconfig.json'),
   };
 }
 
@@ -129,7 +130,12 @@ function resolve(
   main: null | Package;
   packages: Package[];
 } {
-  const result = {
+  const result: {
+    rootPath: string;
+    packageRootPath: string;
+    main: null | Package;
+    packages: Package[];
+  } = {
     rootPath,
     packageRootPath,
     main: null,
@@ -163,31 +169,42 @@ async function runRelease(config: object, params: Params): Promise<void> {
     noVerify: false,
     prerelease: params.prerelease,
     firstRelease: params.firstRelease,
+    skip: {
+      changelog: true,
+    },
   });
+  // shell.exec('git push --follow-tags origin master');
 }
 
 async function releasePackage({
-  mainPackageJson,
   packages,
   params,
 }: {
-  mainPackageJson: PackageConfig;
   packages: Package[];
   params: Params;
 }): Promise<void> {
   const pkg = packages.splice(0, 1)[0];
   if (!pkg) return;
 
-  shell.cd(pkg.rootPath);
-  await runRelease(
-    {
-      tagPrefix: `${mainPackageJson.name}@${mainPackageJson.version}_${pkg.packageJson.name}@`,
-      infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
-    },
-    params,
-  );
+  if (fs.existsSync(pkg.rootPath)) {
+    shell.cd(pkg.rootPath);
+    await runRelease(
+      {
+        tagPrefix: `${pkg.packageJson.name}@`,
+        // infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
+      },
+      params,
+    );
+    await changelog.output(
+      {
+        infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
+        path: rootPath,
+      },
+      '1.8.0',
+    );
+  }
 
-  await releasePackage({ mainPackageJson, packages, params });
+  await releasePackage({ packages, params });
 }
 
 async function release({
@@ -205,15 +222,13 @@ async function release({
     await runRelease(
       {
         tagPrefix: `${packageJson.name}@`,
-        infile: path.resolve(main.rootPath, 'doc', 'CHANGELOG.md'),
+        // infile: path.resolve(main.rootPath, 'CHANGELOG.md'),
       },
       params,
     );
   }
 
-  const mainPackageJson = require(path.resolve(main.rootPath, 'package.json'));
   await releasePackage({
-    mainPackageJson,
     packages: packages.slice(0),
     params,
   });
@@ -222,4 +237,5 @@ async function release({
 module.exports = {
   build,
   resolve,
+  release,
 };

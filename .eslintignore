@@ -7,3 +7,6 @@ coverage
 
 jest.config.ts
 script
+
+CHANGELOG.md
+README.md
