@@ -14,7 +14,6 @@ function release(): void {
   shell.cd(path.resolve(packageRootPath, 'test'));
 
   standardVersion({
-    firstRelease: true,
     infile: path.resolve(packageRootPath, 'CHANGELOG.md'),
   });
 }
