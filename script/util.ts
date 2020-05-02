@@ -245,8 +245,8 @@ async function runRelease(
 ): Promise<void> {
   await standardVersion({
     ...config,
-    silent: false,
-    noVerify: true,
+    silent: true,
+    noVerify: false,
     prerelease: params.prerelease,
     firstRelease: params.firstRelease,
     releaseCommitMessageFormat: `release(${config.name}): {{currentTag}}`,
@@ -279,7 +279,7 @@ async function releasePackage({
     );
     changelog({
       package: pkg.name,
-      version: require(path.release(pkg.rootPath, 'package.json').version),
+      version: require(path.resolve(pkg.rootPath, 'package.json').version),
     });
   }
 
