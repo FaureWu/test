@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "es2015",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "declaration": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "__test__",
+    "test",
+    "coverage",
+    "jest.config.ts",
+    "rollup.config.ts",
+    "script",
+    "package"
+  ]
+}

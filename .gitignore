@@ -1,0 +1,6 @@
+# don't ever commit node_modules
+/node_modules
+# don't commit nyc coverage output
+coverage
+
+*.log
