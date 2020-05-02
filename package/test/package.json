@@ -1,7 +1,7 @@
 {
   "name": "test",
   "description": "",
-  "version": "1.8.9",
+  "version": "1.8.10",
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts"
