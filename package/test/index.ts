@@ -6,3 +6,5 @@ export default function hello(): string {
 // 呃呃呃
 
 // test
+
+// test 2

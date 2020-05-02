@@ -1,5 +1,91 @@
 undefined
 
+## [1.8.1](https://github.com/FaureWu/test/compare/v1.2.1...v1.8.1) (2020-05-02)
+
+### Bug Fixes
+
+- **core:** eee ([4c37f5f](https://github.com/FaureWu/test/commit/4c37f5fad97014bfb1fea18e93cda2da89d4bbb7))
+
+### Features
+
+- commit 1 ([18953f7](https://github.com/FaureWu/test/commit/18953f74f1c33cbe5c0c9434253f97fede26f081))
+- test ([452212b](https://github.com/FaureWu/test/commit/452212b630af39ef9f59da837115ce0ba0b8e7e8))
+- **core:** test ([94a3acc](https://github.com/FaureWu/test/commit/94a3acc4c256c0717e1ea9d51e6c4f44fc419c28))
+
+# [1.8.0](https://github.com/FaureWu/test/compare/v1.2.1...v1.8.0) (2020-05-02)
+
+### Bug Fixes
+
+- **core:** eee ([4c37f5f](https://github.com/FaureWu/test/commit/4c37f5fad97014bfb1fea18e93cda2da89d4bbb7))
+
+### Features
+
+- commit 1 ([18953f7](https://github.com/FaureWu/test/commit/18953f74f1c33cbe5c0c9434253f97fede26f081))
+- test ([452212b](https://github.com/FaureWu/test/commit/452212b630af39ef9f59da837115ce0ba0b8e7e8))
+- **core:** test ([94a3acc](https://github.com/FaureWu/test/commit/94a3acc4c256c0717e1ea9d51e6c4f44fc419c28))
+
+# [1.8.0](https://github.com/FaureWu/test/compare/v1.2.1...v1.8.0) (2020-05-02)
+
+### Bug Fixes
+
+- **core:** eee ([4c37f5f](https://github.com/FaureWu/test/commit/4c37f5fad97014bfb1fea18e93cda2da89d4bbb7))
+
+### Features
+
+- commit 1 ([18953f7](https://github.com/FaureWu/test/commit/18953f74f1c33cbe5c0c9434253f97fede26f081))
+- test ([452212b](https://github.com/FaureWu/test/commit/452212b630af39ef9f59da837115ce0ba0b8e7e8))
+- **core:** test ([94a3acc](https://github.com/FaureWu/test/commit/94a3acc4c256c0717e1ea9d51e6c4f44fc419c28))
+
+## 1.8.0 (2020-05-02)
+
+- chore(release): 1.3.0 ([8edbc14](https://github.com/FaureWu/test/commit/8edbc14))
+- chore(release): 1.3.0 ([cba77c1](https://github.com/FaureWu/test/commit/cba77c1))
+- chore(release): 1.3.1 ([2634761](https://github.com/FaureWu/test/commit/2634761))
+- chore(release): 1.3.10 ([0c65f4a](https://github.com/FaureWu/test/commit/0c65f4a))
+- chore(release): 1.3.11 ([9d3c6e7](https://github.com/FaureWu/test/commit/9d3c6e7))
+- chore(release): 1.3.12 ([1261370](https://github.com/FaureWu/test/commit/1261370))
+- chore(release): 1.3.13 ([2900d30](https://github.com/FaureWu/test/commit/2900d30))
+- chore(release): 1.3.14 ([63e7abf](https://github.com/FaureWu/test/commit/63e7abf))
+- chore(release): 1.3.15 ([2bc2713](https://github.com/FaureWu/test/commit/2bc2713))
+- chore(release): 1.3.16 ([5c2ce28](https://github.com/FaureWu/test/commit/5c2ce28))
+- chore(release): 1.3.17 ([bf30298](https://github.com/FaureWu/test/commit/bf30298))
+- chore(release): 1.3.18 ([2d89b9f](https://github.com/FaureWu/test/commit/2d89b9f))
+- chore(release): 1.3.19 ([e1f9f5e](https://github.com/FaureWu/test/commit/e1f9f5e))
+- chore(release): 1.3.2 ([cc404cf](https://github.com/FaureWu/test/commit/cc404cf))
+- chore(release): 1.3.3 ([912cbf0](https://github.com/FaureWu/test/commit/912cbf0))
+- chore(release): 1.3.4 ([3b999a0](https://github.com/FaureWu/test/commit/3b999a0))
+- chore(release): 1.3.5 ([d4ca443](https://github.com/FaureWu/test/commit/d4ca443))
+- chore(release): 1.3.6 ([aeb759b](https://github.com/FaureWu/test/commit/aeb759b))
+- chore(release): 1.3.7 ([35e706a](https://github.com/FaureWu/test/commit/35e706a))
+- chore(release): 1.3.8 ([ef2515d](https://github.com/FaureWu/test/commit/ef2515d))
+- chore(release): 1.3.9 ([dee0c38](https://github.com/FaureWu/test/commit/dee0c38))
+- chore(release): 1.4.0 ([9744247](https://github.com/FaureWu/test/commit/9744247))
+- chore(release): 1.4.0 ([c53764f](https://github.com/FaureWu/test/commit/c53764f))
+- chore(release): 1.5.0 ([2f9faad](https://github.com/FaureWu/test/commit/2f9faad))
+- chore(release): 1.6.0 ([011326b](https://github.com/FaureWu/test/commit/011326b))
+- chore(release): 1.7.0 ([ce927ef](https://github.com/FaureWu/test/commit/ce927ef))
+- chore(release): 1.8.0 ([7e94461](https://github.com/FaureWu/test/commit/7e94461))
+- chore(release): 1.8.1 ([c307053](https://github.com/FaureWu/test/commit/c307053))
+- chore(release): 1.8.10 ([516054a](https://github.com/FaureWu/test/commit/516054a))
+- chore(release): 1.8.11 ([cc08b44](https://github.com/FaureWu/test/commit/cc08b44))
+- chore(release): 1.8.12 ([b99796a](https://github.com/FaureWu/test/commit/b99796a))
+- chore(release): 1.8.13 ([874f1b4](https://github.com/FaureWu/test/commit/874f1b4))
+- chore(release): 1.8.14 ([6873673](https://github.com/FaureWu/test/commit/6873673))
+- chore(release): 1.8.2 ([0839a92](https://github.com/FaureWu/test/commit/0839a92))
+- chore(release): 1.8.3 ([e7ff002](https://github.com/FaureWu/test/commit/e7ff002))
+- chore(release): 1.8.4 ([5abe054](https://github.com/FaureWu/test/commit/5abe054))
+- chore(release): 1.8.5 ([72a1acf](https://github.com/FaureWu/test/commit/72a1acf))
+- chore(release): 1.8.6 ([5efd9f5](https://github.com/FaureWu/test/commit/5efd9f5))
+- chore(release): 1.8.7 ([d614b37](https://github.com/FaureWu/test/commit/d614b37))
+- chore(release): 1.8.8 ([28ef343](https://github.com/FaureWu/test/commit/28ef343))
+- chore(release): 1.8.9 ([72a4bab](https://github.com/FaureWu/test/commit/72a4bab))
+- chore(release): 1.9.0 ([c37e0dd](https://github.com/FaureWu/test/commit/c37e0dd))
+- feat: commit 1 ([18953f7](https://github.com/FaureWu/test/commit/18953f7))
+- feat: test ([452212b](https://github.com/FaureWu/test/commit/452212b))
+- feat(core): test ([94a3acc](https://github.com/FaureWu/test/commit/94a3acc))
+- fix(core): eee ([4c37f5f](https://github.com/FaureWu/test/commit/4c37f5f))
+- e ([c0e75f0](https://github.com/FaureWu/test/commit/c0e75f0))
+
 ## 1.8.0 (2020-05-02)
 
 - chore(release): 1.3.0 ([8edbc14](https://github.com/FaureWu/test/commit/8edbc14))

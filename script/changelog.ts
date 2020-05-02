@@ -21,6 +21,7 @@ function changelog(args: object, newVersion) {
     const changelogStream = conventionalChangelog(
       {
         tagPrefix: args.tagPrefix,
+        preset: 'angular',
       },
       context,
       { merges: null, path: args.path },

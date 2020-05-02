@@ -198,9 +198,9 @@ async function releasePackage({
     await changelog.output(
       {
         infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
-        path: rootPath,
+        path: packageRootPath,
       },
-      '1.8.0',
+      '1.8.1',
     );
   }
 
