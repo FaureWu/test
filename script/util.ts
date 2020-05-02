@@ -92,7 +92,7 @@ function changelog({
       return true;
     }
 
-    const [, n, v] = tag.match(/tag: (.+)@(\d.\d.\d)/) as [
+    const [, n, v] = tag.match(/tag: (.+)@(\d+.\d+.\d+)/) as [
       string,
       string,
       string,
