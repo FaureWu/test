@@ -173,7 +173,7 @@ async function runRelease(config: object, params: Params): Promise<void> {
       changelog: true,
     },
   });
-  // shell.exec('git push --follow-tags origin master');
+  shell.exec('git push --follow-tags origin master');
 }
 
 async function releasePackage({
