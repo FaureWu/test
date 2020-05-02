@@ -250,7 +250,7 @@ async function releasePackage({
       },
       params,
     );
-    changelog({ package: 'test', version: '1.11.4' });
+    changelog({ package: 'test', version: '1.11.7' });
   }
 
   await releasePackage({ packages, params });
