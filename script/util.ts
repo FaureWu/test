@@ -7,7 +7,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const typescript = require('rollup-plugin-typescript2');
 const shell = require('shelljs');
 const standardVersion = require('standard-version');
-const compareVersion = require('compareVersion');
+const compareVersion = require('compare-version');
 
 interface PackageConfig {
   main: string;
@@ -18,7 +18,7 @@ interface PackageConfig {
 }
 
 interface Package {
-  name?: string;
+  name: string;
   sourcePath: string;
   rootPath: string;
   tsConfigPath: string;
@@ -239,7 +239,10 @@ function resolve(
   return result;
 }
 
-async function runRelease(config: object, params: Params): Promise<void> {
+async function runRelease(
+  config: { name: string; [prop: string]: any },
+  params: Params,
+): Promise<void> {
   await standardVersion({
     ...config,
     silent: false,
