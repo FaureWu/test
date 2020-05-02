@@ -13,9 +13,7 @@ function release(): void {
   // if (!fs.existsSync(packageRootPath)) return;
 
   standardVersion({
-    noVerify: true,
     infile: path.resolve(rootPath, 'CHANGELOG.md'),
-    silent: true,
   });
 }
 
