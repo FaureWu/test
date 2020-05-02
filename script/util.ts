@@ -60,6 +60,7 @@ interface Params {
 interface Commit {
   commit: string;
   message: string;
+  version: string;
 }
 
 function changelog({
@@ -69,9 +70,15 @@ function changelog({
   version: string;
   package: string;
 }): void {
-  const messages = shell.exec('git log --pretty=format:%s');
-  const commits = shell.exec('git log --pretty=format:%h');
-  const tags = shell.exec('git log --pretty=format:%d');
+  const messages = shell
+    .exec('git log --pretty=format:%s', { silent: true })
+    .stdout.split('\n');
+  const commits = shell
+    .exec('git log --pretty=format:%h', { silent: true })
+    .stdout.split('\n');
+  const tags = shell
+    .exec('git log --pretty=format:%d', { silent: true })
+    .stdout.split('\n');
 
   const newCommits = [] as Commit[];
   tags.every((tag: string, index: number): boolean => {
@@ -79,12 +86,13 @@ function changelog({
       newCommits.push({
         commit: commits[index],
         message: messages[index],
+        version,
         // ...resolveMessage(messages[index]),
       });
       return true;
     }
 
-    const [, n, v] = tag.match(/^ \(tag: (.+)@(\d.\d.\d)\)/) as [
+    const [, n, v] = tag.match(/tag: (.+)@(\d.\d.\d)/) as [
       string,
       string,
       string,
@@ -93,6 +101,7 @@ function changelog({
       newCommits.push({
         commit: commits[index],
         message: messages[index],
+        version: v,
         // ...resolveMessage(messages[index]),
       });
       return true;
@@ -241,7 +250,7 @@ async function releasePackage({
       },
       params,
     );
-    changelog({ package: 'test', version: '1.9.3' });
+    changelog({ package: 'test', version: '1.11.4' });
   }
 
   await releasePackage({ packages, params });
