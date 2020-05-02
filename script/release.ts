@@ -1,25 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const shell = require('shelljs');
 const yargs = require('yargs');
-const standardVersion = require('standard-version');
+const util = require('./util');
 
 const argv = yargs.alias('m', 'main').alias('p', 'package').argv;
-
-const rootPath = process.cwd();
-const packageRootPath = path.resolve(rootPath, 'package');
-
-function release(): void {
-  // if (!fs.existsSync(packageRootPath)) return;
-  shell.cd(path.resolve(packageRootPath, 'test'));
-
-  standardVersion({
-    infile: path.resolve(packageRootPath, 'CHANGELOG.md'),
-  });
-}
-
 function run() {
-  release();
+  const { main, packages } = util.resolve(argv);
+  util.release({ main, packages, params: argv });
 }
 
 run();
