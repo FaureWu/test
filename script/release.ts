@@ -11,9 +11,11 @@ const packageRootPath = path.resolve(rootPath, 'package');
 
 function release(): void {
   // if (!fs.existsSync(packageRootPath)) return;
+  shell.cd(path.resolve(packageRootPath, 'test'));
 
   standardVersion({
-    infile: path.resolve(rootPath, 'CHANGELOG.md'),
+    firstRelease: true,
+    infile: path.resolve(packageRootPath, 'CHANGELOG.md'),
   });
 }
 
