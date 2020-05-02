@@ -63,6 +63,8 @@ interface Commit {
   version: string;
 }
 
+const commitRE = /^(revert: )?(feat|fix|doc|style|refactor|perf|test|build|ci|chore|types|release|dep)(\(.+\))?: .{1,50}/;
+
 function changelog({
   version,
   package,
@@ -81,6 +83,15 @@ function changelog({
     .stdout.split('\n');
 
   const newCommits = [] as Commit[];
+  // commits.every((commit: string, index: number): boolean => {
+  //   const [message, revert, type, name] = commit.match(commitRE) as [
+  //     string,
+  //     string,
+  //     string,
+  //     string,
+  //   ];
+  // });
+
   tags.every((tag: string, index: number): boolean => {
     if (!tag) {
       newCommits.push({
@@ -287,4 +298,5 @@ module.exports = {
   build,
   resolve,
   release,
+  commitRE,
 };
