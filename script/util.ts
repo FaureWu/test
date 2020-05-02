@@ -156,11 +156,13 @@ function resolve(
   return result;
 }
 
-async function runRelease(config) {
+async function runRelease(config: object, params: Params): Promise<void> {
   await standardVersion({
     ...config,
     silent: true,
     noVerify: false,
+    prerelease: params.prerelease,
+    firstRelease: params.firstRelease,
   });
 }
 
@@ -177,10 +179,13 @@ async function releasePackage({
   if (!pkg) return;
 
   shell.cd(pkg.rootPath);
-  await runRelease({
-    tagPrefix: `${mainPackageJson.name}@${mainPackageJson.version}_${pkg.packageJson.name}@`,
-    infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
-  });
+  await runRelease(
+    {
+      tagPrefix: `${mainPackageJson.name}@${mainPackageJson.version}_${pkg.packageJson.name}@`,
+      infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
+    },
+    params,
+  );
 
   await releasePackage({ mainPackageJson, packages, params });
 }
@@ -197,10 +202,13 @@ async function release({
   if (main) {
     const packageJson = require(path.resolve(main.rootPath, 'package.json'));
     shell.cd(main.rootPath);
-    await runRelease({
-      tagPrefix: `${packageJson.name}@`,
-      infile: path.resolve(main.rootPath, 'doc', 'CHANGELOG.md'),
-    });
+    await runRelease(
+      {
+        tagPrefix: `${packageJson.name}@`,
+        infile: path.resolve(main.rootPath, 'doc', 'CHANGELOG.md'),
+      },
+      params,
+    );
   }
 
   const mainPackageJson = require(path.resolve(main.rootPath, 'package.json'));
