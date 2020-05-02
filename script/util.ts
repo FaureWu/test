@@ -7,7 +7,6 @@ const commonjs = require('rollup-plugin-commonjs');
 const typescript = require('rollup-plugin-typescript2');
 const shell = require('shelljs');
 const standardVersion = require('standard-version');
-const changelog = require('./changelog');
 
 const rootPath = process.cwd();
 const packageRootPath = path.resolve(rootPath, 'package');
@@ -56,6 +55,53 @@ interface Params {
   main: boolean | string;
   package: boolean | string;
   [props: string]: any;
+}
+
+interface Commit {
+  commit: string;
+  message: string;
+}
+
+function changelog({
+  version,
+  package,
+}: {
+  version: string;
+  package: string;
+}): void {
+  const messages = shell.exec('git log --pretty=format:%s');
+  const commits = shell.exec('git log --pretty=format:%h');
+  const tags = shell.exec('git log --pretty=format:%d');
+
+  const newCommits = [] as Commit[];
+  tags.every((tag: string, index: number): boolean => {
+    if (!tag) {
+      newCommits.push({
+        commit: commits[index],
+        message: messages[index],
+        // ...resolveMessage(messages[index]),
+      });
+      return true;
+    }
+
+    const [, n, v] = tag.match(/^ \(tag: (.+)@(\d.\d.\d)\)/) as [
+      string,
+      string,
+      string,
+    ];
+    if (n === package && v === version) {
+      newCommits.push({
+        commit: commits[index],
+        message: messages[index],
+        // ...resolveMessage(messages[index]),
+      });
+      return true;
+    }
+
+    return false;
+  });
+
+  console.log(newCommits);
 }
 
 async function buildPackage(packages: Package[]): Promise<void> {
@@ -195,13 +241,7 @@ async function releasePackage({
       },
       params,
     );
-    await changelog.output(
-      {
-        infile: path.resolve(pkg.rootPath, 'CHANGELOG.md'),
-        path: packageRootPath,
-      },
-      '1.8.1',
-    );
+    changelog({ package: 'test', version: '1.9.3' });
   }
 
   await releasePackage({ packages, params });

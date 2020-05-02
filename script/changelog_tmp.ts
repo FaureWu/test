@@ -18,14 +18,10 @@ function changelog(args: object, newVersion) {
     }
     let content = '';
     const context = { version: newVersion };
-    const changelogStream = conventionalChangelog(
-      {
-        tagPrefix: args.tagPrefix,
-        preset: 'angular',
-      },
-      context,
-      { merges: null, path: args.path },
-    ).on('error', function (err) {
+    const changelogStream = conventionalChangelog({}, context, {
+      merges: null,
+      path: args.path,
+    }).on('error', function (err) {
       return reject(err);
     });
 
